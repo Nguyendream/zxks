@@ -2,6 +2,8 @@ package com.zxks.dao;
 
 import com.zxks.pojo.User;
 
+import java.util.List;
+
 public interface UserMapper {
     int deleteByPrimaryKey(String idCard);
 
@@ -14,4 +16,8 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    int checkIdCard(String idCard);
+
+    List<User> selectAllUsers();
 }

@@ -38,18 +38,10 @@
                         <form role="form" id="loginForm">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" id="usernameId" placeholder="用户名" name="username" autofocus>
+                                    <input class="form-control" id="usernameId" placeholder="准考证号" name="idCard" autofocus>
                                 </div>
                                 <div class="form-group">
                                     <input class="form-control" id="passwordId" placeholder="密码"  type="password" name="password">
-                                </div>
-                                <div class="form-group">
-                                    <label class="radio-inline">
-                                        <input name="level" type="radio" value="1" checked>考生
-                                    </label>
-                                    <label class="radio-inline">
-                                    	<input name="level" type="radio" value="2">管理员
-                                    </label>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
                                 <a id="login" class="btn btn-lg btn-primary btn-block">登陆</a>
@@ -77,7 +69,7 @@
 $(document).ready(function(){
 	$("#login").click(function(){
 		if ($("#usernameId").val()=="" || $("#usernameId").val()==null) {
-			alert("请输入用户名！");
+			alert("请输入准考证号！");
 			return false;
 		}
 		if ($("#passwordId").val()=="" || $("#passwordId").val()==null) {
@@ -86,8 +78,8 @@ $(document).ready(function(){
 		}
 		$.ajax({
 			type: "post",
-			url: "user/login",
-			timeout: "4000",
+			url: "user/login.do",
+			timeout: "5000",
 			data: $("#loginForm").serialize(),
 			async: true,
 			error: function(textStatus, data){
@@ -95,10 +87,8 @@ $(document).ready(function(){
 						"\nsuccess: " + data.success);
 			},
 			success: function(data) {
-				if(data.success==1){
-		    		window.location.href = "exam_paper.html";  
-		    	} else if (data.success==2) {
-		    		window.location.href = "admin.html";
+				if(data.status==0){
+		    		location.href = "exam_paper.html";
 		    	} else {
 		    		alert(data.msg);
 		    		$("#passwordId").val("");

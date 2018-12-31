@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zxks.dao.ExamPaperMapper">
+  <resultMap id="BaseResultMap" type="com.zxks.pojo.ExamPaper">
+    <constructor>
+      <idArg column="id_paper" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="id_card" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="code_subject" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="score_exam" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.zxks.pojo.ExamPaper">
+    <constructor>
+      <idArg column="id_paper" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="id_card" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="code_subject" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="score_exam" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="data_paper" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id_paper, id_card, code_subject, score_exam
+  </sql>
+  <sql id="Blob_Column_List">
+    data_paper
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from exam_paper
+    where id_paper = #{idPaper,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from exam_paper
+    where id_paper = #{idPaper,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zxks.pojo.ExamPaper">
+    insert into exam_paper (id_paper, id_card, code_subject, 
+      score_exam, data_paper)
+    values (#{idPaper,jdbcType=INTEGER}, #{idCard,jdbcType=VARCHAR}, #{codeSubject,jdbcType=VARCHAR}, 
+      #{scoreExam,jdbcType=INTEGER}, #{dataPaper,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zxks.pojo.ExamPaper">
+    insert into exam_paper
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idPaper != null">
+        id_paper,
+      </if>
+      <if test="idCard != null">
+        id_card,
+      </if>
+      <if test="codeSubject != null">
+        code_subject,
+      </if>
+      <if test="scoreExam != null">
+        score_exam,
+      </if>
+      <if test="dataPaper != null">
+        data_paper,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idPaper != null">
+        #{idPaper,jdbcType=INTEGER},
+      </if>
+      <if test="idCard != null">
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="codeSubject != null">
+        #{codeSubject,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreExam != null">
+        #{scoreExam,jdbcType=INTEGER},
+      </if>
+      <if test="dataPaper != null">
+        #{dataPaper,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zxks.pojo.ExamPaper">
+    update exam_paper
+    <set>
+      <if test="idCard != null">
+        id_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="codeSubject != null">
+        code_subject = #{codeSubject,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreExam != null">
+        score_exam = #{scoreExam,jdbcType=INTEGER},
+      </if>
+      <if test="dataPaper != null">
+        data_paper = #{dataPaper,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id_paper = #{idPaper,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zxks.pojo.ExamPaper">
+    update exam_paper
+    set id_card = #{idCard,jdbcType=VARCHAR},
+      code_subject = #{codeSubject,jdbcType=VARCHAR},
+      score_exam = #{scoreExam,jdbcType=INTEGER},
+      data_paper = #{dataPaper,jdbcType=LONGVARCHAR}
+    where id_paper = #{idPaper,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zxks.pojo.ExamPaper">
+    update exam_paper
+    set id_card = #{idCard,jdbcType=VARCHAR},
+      code_subject = #{codeSubject,jdbcType=VARCHAR},
+      score_exam = #{scoreExam,jdbcType=INTEGER}
+    where id_paper = #{idPaper,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.test.yanglao.pojo.ExamPaper">
+    <constructor>
+      <idArg column="id_paper" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="id_card" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="code_subject" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="score_exam" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.test.yanglao.pojo.ExamPaper">
+    <constructor>
+      <idArg column="id_paper" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="id_card" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="code_subject" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="score_exam" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="data_paper" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id_paper, id_card, code_subject, score_exam
+  </sql>
+  <sql id="Blob_Column_List">
+    data_paper
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from exam_paper
+    where id_paper = #{idPaper,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from exam_paper
+    where id_paper = #{idPaper,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.test.yanglao.pojo.ExamPaper">
+    insert into exam_paper (id_paper, id_card, code_subject, 
+      score_exam, data_paper)
+    values (#{idPaper,jdbcType=INTEGER}, #{idCard,jdbcType=VARCHAR}, #{codeSubject,jdbcType=VARCHAR}, 
+      #{scoreExam,jdbcType=INTEGER}, #{dataPaper,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.test.yanglao.pojo.ExamPaper">
+    insert into exam_paper
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idPaper != null">
+        id_paper,
+      </if>
+      <if test="idCard != null">
+        id_card,
+      </if>
+      <if test="codeSubject != null">
+        code_subject,
+      </if>
+      <if test="scoreExam != null">
+        score_exam,
+      </if>
+      <if test="dataPaper != null">
+        data_paper,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idPaper != null">
+        #{idPaper,jdbcType=INTEGER},
+      </if>
+      <if test="idCard != null">
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="codeSubject != null">
+        #{codeSubject,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreExam != null">
+        #{scoreExam,jdbcType=INTEGER},
+      </if>
+      <if test="dataPaper != null">
+        #{dataPaper,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.test.yanglao.pojo.ExamPaper">
+    update exam_paper
+    <set>
+      <if test="idCard != null">
+        id_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="codeSubject != null">
+        code_subject = #{codeSubject,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreExam != null">
+        score_exam = #{scoreExam,jdbcType=INTEGER},
+      </if>
+      <if test="dataPaper != null">
+        data_paper = #{dataPaper,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id_paper = #{idPaper,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.test.yanglao.pojo.ExamPaper">
+    update exam_paper
+    set id_card = #{idCard,jdbcType=VARCHAR},
+      code_subject = #{codeSubject,jdbcType=VARCHAR},
+      score_exam = #{scoreExam,jdbcType=INTEGER},
+      data_paper = #{dataPaper,jdbcType=LONGVARCHAR}
+    where id_paper = #{idPaper,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.test.yanglao.pojo.ExamPaper">
+    update exam_paper
+    set id_card = #{idCard,jdbcType=VARCHAR},
+      code_subject = #{codeSubject,jdbcType=VARCHAR},
+      score_exam = #{scoreExam,jdbcType=INTEGER}
+    where id_paper = #{idPaper,jdbcType=INTEGER}
+  </update>
+</mapper>

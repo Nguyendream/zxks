@@ -2,6 +2,8 @@ package com.zxks.dao;
 
 import com.zxks.pojo.ExamParameter;
 
+import java.util.List;
+
 public interface ExamParameterMapper {
     int deleteByPrimaryKey(String codeSubject);
 
@@ -14,4 +16,6 @@ public interface ExamParameterMapper {
     int updateByPrimaryKeySelective(ExamParameter record);
 
     int updateByPrimaryKey(ExamParameter record);
+
+    List<ExamParameter> selectList();
 }

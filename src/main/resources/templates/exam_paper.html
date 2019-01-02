@@ -77,9 +77,8 @@
 					<fieldset>
 						<label class="col-sm-1">科目:</label>
 						<div class="col-sm-2">
-							<select name="subjectCode" id="subjectId" class="form-control">
-							<option value="101">数学</option>
-							<option value="102">语文</option>
+							<select name="codeSubject" id="subjectId" class="form-control">
+							<option value="Value">请选择</option>
 							</select>
 						</div>
 						<div class="col-sm-1">
@@ -93,10 +92,10 @@
 						</div>
 						
 						<label class="col-sm-1">分数:</label>
-						<div class="col-sm-3">
-							
+						<div style="font-size:22px;" class="col-sm-3">
+							<stront id="score"></stront>
 						</div>
-						</fieldset>
+					</fieldset>
 					</div>
 					</form>
 					
@@ -148,126 +147,6 @@
 	<!-- Metis Menu Plugin JavaScript -->
 	<script src="vendor/metisMenu/metisMenu.min.js"></script>
 	
-	<script>
-
-	var nMS = 1;
-    function GetRTime(){  
-        
-        nMS = nMS-1;
-        //小时  
-        var nH = Math.floor(nMS/(60*60));  
-        //分钟  
-        var nM = Math.floor(nMS/(60)) % 60;  
-        //秒钟  
-        var nS = Math.floor(nMS) % 60;  
-        //显示小时     
-        $("#hh").text(nH);  
-        //显示分钟
-        $("#mm").text(nM);  
-        //显示秒钟  
-        $("#ss").text(nS);   
-    }
-
-	$(document).ready(function() {
-		//get user info
-		
-		$.ajax({
-			type: "get",
-			url: "user/info",
-			success: function(data) {
-				if (data.success==1) {
-					$("#username").html(data.data.username);
-				} else {
-					alert("请登陆");
-					window.location.href = "login.html";
-				}
-			}
-		});
-		GetRTime();
-		$("#start").click(function(){
-			$.ajax({
-				type: "get",
-				url: "user/getParameter",
-				data: $("#parameterId").serialize(),
-				async: true,
-				error: function(textStatus, data){
-					alert("\ntextStatus: " + textStatus +
-							"\nsuccess: " + data.success);
-					return;
-				},
-				success: function(data) {
-					if (data.success==1) {
-						for (var i = 0; i < data.data.length; i++) {
-							if (data.data[i].code_subject == $("#subjectId").val()) {
-								nMS = data.data[i].time_exam*60;
-								console.log(data.data[i].time_exam);
-								return;
-							}
-						}
-					}
-				}
-			});
-			$.ajax({
-				type: "get",
-				url: "user/createPaper",
-				data: $("#parameterId").serialize(),
-				async: true,
-				success: function(data) {
-					if (data.success==1) {
-						alert(data.msg);
-					} else {
-						alert(data.msg);
-					}
-				}
-			});
-			$.ajax({
-				type: "get",
-				url: "user/getPaper",
-				success: function(data) {
-					if (data.success==1) {
-						//console.log(data.data.data_paper);
-						var paper = eval('(' + data.data.data_paper + ')');
-						for (var i = 0; i < paper.length; i++) {
-							var question = paper[i].question;
-							//console.log(paper[i].question);
-							
-							var arr = question.split("#");
-							console.log((i+1) + ". ");
-							for (var j = 0; j < arr.length; j++) {
-								console.log(arr[j] + " ");
-								
-							}
-							$("#examFormId").append(
-							    	"<div class=\"form-group\">" + 
-								"<label>"+(i+1)+"."+arr[0]+"</label>" +
-								"<div class=\"radio\">" +
-									"<label class=\"radio-inline clearfix\">"+
-										"<input name=\"q"+(i+1)+"\" type=\"radio\" value=\"A\">"+arr[1]+
-									"</label>"+
-									"<label class=\"radio-inline clearfix\">"+
-										"<input name=\"q"+(i+1)+"\" type=\"radio\" value=\"B\">"+arr[2]+
-									"</label>"+
-									"<label class=\"radio-inline clearfix\">"+
-										"<input name=\"q"+(i+1)+"\" type=\"radio\" value=\"C\">"+arr[3]+
-									"</label>"+
-									"<label class=\"radio-inline clearfix\">"+
-										"<input name=\"q"+(i+1)+"\" type=\"radio\" value=\"D\">"+arr[4]+
-									"</label></div></div>"
-							);
-						}
-					} else {
-						alert(data.msg);
-					}
-				}
-			});
-			var timer_rt = window.setInterval("GetRTime()", 1000);
-			$("#panel1").attr("class","panel panel-primary");
-			//$("#start").attr("class","btn btn-primary disabled");
-			//$("#subjectId").attr("class","form-control disabled");
-			$("fieldset").attr("disabled","");
-			
-		});
-	});
-	</script>
+	<script src="dist/js/exam_paper.js"></script>
 </body>
 </html>

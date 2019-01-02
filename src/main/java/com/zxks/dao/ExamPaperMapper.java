@@ -16,4 +16,10 @@ public interface ExamPaperMapper {
     int updateByPrimaryKeyWithBLOBs(ExamPaper record);
 
     int updateByPrimaryKey(ExamPaper record);
+
+    int checkPaper(String idCard);
+
+    ExamPaper selectByIdCard(String idCard);
+
+    int updateByIdCardSelective(ExamPaper examPaper);
 }

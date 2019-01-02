@@ -92,4 +92,10 @@
       amount_question = #{amountQuestion,jdbcType=INTEGER}
     where code_subject = #{codeSubject,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectList" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from exam_parameter
+  </select>
 </mapper>

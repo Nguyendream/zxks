@@ -81,4 +81,11 @@
       answer = #{answer,jdbcType=VARCHAR}
     where id_question = #{idQuestion,jdbcType=INTEGER}
   </update>
+
+  <select id="selectBySubCode" resultMap="BaseResultMap" parameterType="string">
+    select
+    <include refid="Base_Column_List"/>
+    from exam_library
+    where code_subject = #{codeSubject,jdbcType=VARCHAR}
+  </select>
 </mapper>

@@ -37,6 +37,7 @@ public class UserController {
         User user = (User)session.getAttribute(Const.CURRENT_USER);
         if (user != null) {
             session.removeAttribute(Const.CURRENT_USER);
+            session.removeAttribute(Const.CURRENT_EXAM);
             return ServerResponse.createBySuccessMessage("注销成功");
         }
         return ServerResponse.createByErrorMessage("注销失败，未登陆");

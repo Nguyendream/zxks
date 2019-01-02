@@ -82,13 +82,12 @@ $(document).ready(function(){
 			timeout: "5000",
 			data: $("#loginForm").serialize(),
 			async: true,
-			error: function(textStatus, data){
-				alert("\ntextStatus: " + textStatus +
-						"\nsuccess: " + data.success);
+			error: function(textStatus){
+				alert("textStatus: " + textStatus);
 			},
 			success: function(data) {
 				if(data.status==0){
-		    		location.href = "exam_paper.html";
+		    		location.href = "/";
 		    	} else {
 		    		alert(data.msg);
 		    		$("#passwordId").val("");

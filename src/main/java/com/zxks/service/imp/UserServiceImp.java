@@ -47,7 +47,7 @@ public class UserServiceImp implements UserService {
         }
         if (oldPassword.equals(user.getPassword())) {
             user.setPassword(newPassword);
-            userMapper.updateByPrimaryKey(user);
+            userMapper.updateByPrimaryKeySelective(user);
             return ServerResponse.createBySuccessMessage("修改密码成功");
         } else {
             return ServerResponse.createByErrorMessage("密码错误,修改密码失败");

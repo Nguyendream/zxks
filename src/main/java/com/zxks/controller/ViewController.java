@@ -16,7 +16,7 @@ public class ViewController {
 
         User user = (User)session.getAttribute(Const.CURRENT_USER);
         if (user != null) {
-            return "index";
+            return "exam_paper";
         }
         return "redirect:/login";
     }

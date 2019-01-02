@@ -65,6 +65,7 @@ $.func = {
         });
     },
     getPaper: function () {
+        var result;
         $.ajax({
             type: "post",
             url: "exam/get_paper.do",
@@ -112,19 +113,28 @@ $.func = {
                     }
                     //失效“开始考试”按钮
                     $("fieldset").attr("disabled","");
-                    return 0;
+
+                    if (data.msg != "获取试卷成功") {
+                        $.func.getPaperResult();
+                        $("#subitId").addClass("disabled");
+                        alert(data.msg);
+                        result = 2;
+                    } else {
+                        result = 0;
+                    }
                 } else {
                     alert(data.msg);
-                    return 1;
+                    result = 1;
                 }
             }
-
         });
+        return result;
     },
     createPaper: function () { //创建试卷
         $.ajax({
             type: "post",
             url: "exam/create_paper.do",
+            async: false,
             data: $("#parameterId").serialize(),
             error: function(textStatus){
                 alert("textStatus: " + textStatus);
@@ -132,8 +142,10 @@ $.func = {
             },
             success: function(data) {
                 if (data.status==0) {
-                    if ($.func.getPaper() == 0) {
+                    var result = $.func.getPaper();
+                    if (result == 0) {
                         alert(data.msg);
+                        timerRt = window.setInterval("GetRTime()", 1000);
                     }
                     return 0;
                     /*for (var i = 0; i < data.data.length; i++) {
@@ -150,16 +162,18 @@ $.func = {
             }
         });
     },
-    revisePaper: function() {
+    revisePaper: function() {//改试卷
         $.ajax({
             type: "post",
             url: "exam/revise_paper.do",
+            async: false,
             success: function (data) {
+                $("#scoreId").text(data.data.scoreExam);
                 alert(data.msg);
             }
         });
     },
-    submitPaper: function () {
+    submitPaper: function () {//提交试卷
         $("#subitId").addClass("disabled");
         var answers = new Array(amountQuestion);
         for (var i = 0; i < amountQuestion; i++) {
@@ -172,29 +186,34 @@ $.func = {
             type: "post",
             url: "exam/submit_paper.do",
             traditional: true,
+            async: false,
             data: {"answers": answers },
             error: function () {
                 alert("试卷提交失败");
             },
-            success: function (data) {
+            success: function () {
                 $.func.revisePaper();
 
             }
         });
     },
     getPaperResult: function () {
-        var dataPaper;
+        var answers = new Array();
+        var trueAnswers = new Array();
         var score;
         $.ajax({
             type: "post",
-            url: "exam/get_paper.do",
+            url: "exam/get_paper_result.do",
             async: false,
             success: function (data) {
-                dataPaper = data.data.dataPaper;
                 score = data.data.scoreExam;
+                answers = data.data.answers;
+                trueAnswers = data.data.trueAnswers;
+                $("#scoreId").text(score);
             }
         });
-        $("#score").text(score);
+
+
 
     }
 }
@@ -210,7 +229,7 @@ $(document).ready(function() {
 
         $.func.createPaper();
 
-        timerRt = window.setInterval("GetRTime()", 1000);
+        //timerRt = window.setInterval("GetRTime()", 1000);
         //$("#panel1").attr("class","panel panel-primary");
         //$("#start").attr("class","btn btn-primary disabled");
         //$("#subjectId").attr("class","form-control disabled");
@@ -220,7 +239,9 @@ $(document).ready(function() {
 
     //提交试卷
     $("#subitId").click(function () {
+        window.clearInterval(timerRt);
         $.func.submitPaper();
+        $.func.getPaperResult();
 
     });
 });

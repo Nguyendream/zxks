@@ -12,6 +12,7 @@ import com.zxks.pojo.ExamPaper;
 import com.zxks.pojo.ExamParameter;
 import com.zxks.service.ExamService;
 import com.zxks.util.JsonTool;
+import com.zxks.vo.PaperResultVo;
 import com.zxks.vo.QuestionVo;
 import org.springframework.stereotype.Service;
 
@@ -189,5 +190,29 @@ public class ExamServiceImp implements ExamService {
         }
 
         return ServerResponse.createBySuccess("试卷批改成功，分数：" + score, examPaper);
+    }
+
+    @Override
+    public ServerResponse<PaperResultVo> getPaperResult(ExamPaper examPaper) {
+
+        String json = examPaper.getDataPaper();
+        if (json == null) {
+            return ServerResponse.createByErrorMessage("获取结果失败");
+        }
+
+
+        //Json转对象
+        List<QuestionVo> questionVoList = (List<QuestionVo>) JsonTool.fromJson(json, List.class, QuestionVo.class);
+        PaperResultVo paperResultVo = new PaperResultVo();
+        String[] answers = new String[questionVoList.size()];
+        String[] trueAnswers = new String[questionVoList.size()];
+        for (int i = 0; i < questionVoList.size(); i++) {
+            answers[i] = questionVoList.get(i).getAnswer();
+            trueAnswers[i] = questionVoList.get(i).getTrueAnswer();
+        }
+        paperResultVo.setAnswers(answers);
+        paperResultVo.setTrueAnswers(trueAnswers);
+        paperResultVo.setScoreExam(examPaper.getScoreExam());
+        return ServerResponse.createBySuccess("获取结果成功", paperResultVo);
     }
 }

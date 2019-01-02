@@ -3,6 +3,7 @@ package com.zxks.service;
 import com.zxks.common.ServerResponse;
 import com.zxks.pojo.ExamPaper;
 import com.zxks.pojo.ExamParameter;
+import com.zxks.vo.PaperResultVo;
 import com.zxks.vo.QuestionVo;
 
 import java.util.List;
@@ -22,4 +23,6 @@ public interface ExamService {
     public ServerResponse<String> submitPaper(ExamPaper examPaper, String[] answers);
 
     public ServerResponse<ExamPaper> revisePaper(String idCard);
+
+    public ServerResponse<PaperResultVo> getPaperResult(ExamPaper examPaper);
 }

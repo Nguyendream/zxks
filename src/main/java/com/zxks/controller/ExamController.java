@@ -6,6 +6,7 @@ import com.zxks.pojo.ExamPaper;
 import com.zxks.pojo.ExamParameter;
 import com.zxks.pojo.User;
 import com.zxks.service.ExamService;
+import com.zxks.vo.PaperResultVo;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,8 +56,7 @@ public class ExamController {
             return ServerResponse.createByErrorMessage("没有试卷");
         } else if (examPaper.getScoreExam() != null) {
             //如已有分数，则表示已完成考试
-            return ServerResponse.createByErrorCodeMessage(Const.ExamErrorCode.EXAM_FINISHED,
-                    "已完成考试\n分数：" + examPaper.getScoreExam());
+            return ServerResponse.createBySuccess("已完成考试\n分数：" + examPaper.getScoreExam(), examPaper);
         }
 
         return ServerResponse.createBySuccess("获取试卷成功", examPaper);
@@ -83,7 +83,19 @@ public class ExamController {
             return ServerResponse.createByErrorMessage("用户未登陆");
         }
 
-        return examService.revisePaper(user.getIdCard());
+        ServerResponse<ExamPaper> response = examService.revisePaper(user.getIdCard());
+        session.setAttribute(Const.CURRENT_EXAM, response.getData());
+        return response;
+    }
+
+    @RequestMapping(value = "get_paper_result.do", method = RequestMethod.POST)
+    public ServerResponse<PaperResultVo> getPaperResult(HttpSession session) {
+
+        ExamPaper examPaper = (ExamPaper) session.getAttribute(Const.CURRENT_EXAM);
+        if (examPaper == null) {
+            return ServerResponse.createByErrorMessage("没有阅卷结果");
+        }
+        return examService.getPaperResult(examPaper);
     }
 
 }

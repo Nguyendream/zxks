@@ -26,29 +26,54 @@ $(document).ready(function(){
         }
     }
 
-    idCard.change(function () {
+    idCard.blur(function () {
         if (!$.check.idCard()) {
-            alert("准考证号为12位的数字");
+            idCard.attr("title", "准考证号为12位的数字");
+            idCard.tooltip("show");
+            idCard.parent().attr("class", "form-group has-error");
+        } else {
+            idCard.tooltip("destroy");
+            idCard.parent().attr("class", "form-group");
         }
     });
-    username.change(function () {
+    username.blur(function () {
         if (!$.check.username()) {
-            alert("用户名为4-20位任意字符");
+            username.attr("title", "用户名为4-20位任意字符");
+            username.tooltip("show");
+            username.parent().attr("class", "form-group has-error");
+        } else {
+            username.tooltip("destroy");
+            username.parent().attr("class", "form-group");
         }
     });
-    password.change(function () {
+    password.blur(function () {
         if (!$.check.password()) {
-            alert("密码为6-20位由字母、数字或者下划线组成的字符");
+            password.attr("title", "密码为6-20位由字母、数字或者下划线组成的字符");
+            password.tooltip("show");
+            password.parent().attr("class", "form-group has-error");
+        } else {
+            password.tooltip("destroy");
+            password.parent().attr("class", "form-group");
         }
     });
-    password1.change(function () {
-        if (password.val() != password1.val()) {
-            alert("确认密码错误");
+    password1.blur(function () {
+        if (password1.val() != password.val()) {
+            password1.attr("title", "确认密码错误");
+            password1.tooltip("show");
+            password1.parent().attr("class", "form-group has-error");
+        } else {
+            password1.tooltip("destroy");
+            password1.parent().attr("class", "form-group");
         }
     })
-    age.change(function () {
+    age.blur(function () {
         if (!$.check.age()) {
-            alert("别闹");
+            age.attr("title", "别闹");
+            age.tooltip("show");
+            age.parent().attr("class", "form-group has-error");
+        } else {
+            age.tooltip("destroy");
+            age.parent().attr("class", "form-group");
         }
     })
 

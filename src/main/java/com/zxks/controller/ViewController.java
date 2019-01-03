@@ -41,6 +41,16 @@ public class ViewController {
         return "user_info";
     }
 
+    @GetMapping("/re_password")
+    public String re_password(HttpSession session) {
+
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return "redirect:/login";
+        }
+        return "re_password";
+    }
+
     @GetMapping("/admin")
     public String admin() {
         return "admin";

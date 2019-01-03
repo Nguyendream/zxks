@@ -84,9 +84,9 @@ public class UserController {
         return ServerResponse.createByErrorMessage("用户未登陆，无法获取信息");
     }
 
-    @RequestMapping(value = "list_users.do", method = RequestMethod.POST)
+    /*@RequestMapping(value = "list_users.do", method = RequestMethod.POST)
     public ServerResponse<List<User>> listUsers() {
 
         return userService.userList();
-    }
+    }*/
 }

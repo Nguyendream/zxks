@@ -64,6 +64,15 @@ $.func = {
             }
         });
     },
+    logout: function() {
+        $.ajax({
+            type: "post",
+            url: "user/logout.do",
+            success: function () {
+                location.href="/";
+            }
+        });
+    },
     getPaper: function () {
         var result;
         $.ajax({
@@ -199,7 +208,9 @@ $.func = {
     },
     getPaperResult: function () {
         var answers = new Array();
+        var answer = null;
         var trueAnswers = new Array();
+        var trueAnswer = null;
         var score;
         $.ajax({
             type: "post",
@@ -213,6 +224,17 @@ $.func = {
             }
         });
 
+        for (var i = 0; i < answers.length; i++) {
+            answer = $("input[name='q"+ (i+1) + "'][value='"+ answers[i] +"']").get(0);
+            trueAnswer = $("input[name='q"+ (i+1) + "'][value='"+ trueAnswers[i] +"']").get(0);
+            answer.checked=true;
+            if (answers[i] == trueAnswers[i]) {
+                answer.parentElement.style.backgroundColor="greenyellow";
+            } else {
+                answer.parentElement.style.backgroundColor="red";
+                trueAnswer.parentElement.style.backgroundColor="greenyellow";
+            }
+        }
 
 
     }
@@ -226,15 +248,7 @@ $(document).ready(function() {
 
     //开始考试
     $("#start").click(function(){
-
         $.func.createPaper();
-
-        //timerRt = window.setInterval("GetRTime()", 1000);
-        //$("#panel1").attr("class","panel panel-primary");
-        //$("#start").attr("class","btn btn-primary disabled");
-        //$("#subjectId").attr("class","form-control disabled");
-        //$("fieldset").attr("disabled","");
-
     });
 
     //提交试卷
@@ -242,6 +256,10 @@ $(document).ready(function() {
         window.clearInterval(timerRt);
         $.func.submitPaper();
         $.func.getPaperResult();
-
     });
+
+    //注销
+    $("#logoutId").click(function () {
+        $.func.logout();
+    })
 });

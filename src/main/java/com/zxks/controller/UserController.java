@@ -1,5 +1,6 @@
 package com.zxks.controller;
 
+import com.sun.org.apache.regexp.internal.RE;
 import com.zxks.common.Const;
 import com.zxks.common.ServerResponse;
 import com.zxks.pojo.User;
@@ -41,6 +42,25 @@ public class UserController {
             return ServerResponse.createBySuccessMessage("注销成功");
         }
         return ServerResponse.createByErrorMessage("注销失败，未登陆");
+    }
+
+    @RequestMapping(value = "register.do", method = RequestMethod.POST)
+    public ServerResponse<String> register(User user) {
+
+        return userService.userRegister(user);
+    }
+
+    @RequestMapping(value = "update_user_info.do", method = RequestMethod.POST)
+    public ServerResponse<String> updateUserInfo(User newUserInfo, HttpSession session) {
+
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorMessage("用户未登录");
+        }
+
+        newUserInfo.setIdCard(user.getIdCard());
+        return userService.updateUserInfo(newUserInfo);
+
     }
 
     @RequestMapping(value = "update_password.do", method = RequestMethod.POST)

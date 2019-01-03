@@ -39,6 +39,44 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public ServerResponse<String> userRegister(User user) {
+
+        if (user == null) {
+            return ServerResponse.createByErrorMessage("参数为空");
+        }
+
+        int resultCount = userMapper.checkIdCard(user.getIdCard());
+        if (resultCount != 0) {
+            return ServerResponse.createByErrorMessage("已注册的准考证号");
+        }
+
+        resultCount = userMapper.insert(user);
+        if (resultCount == 0) {
+            return ServerResponse.createByErrorMessage("注册失败");
+        }
+        return ServerResponse.createBySuccessMessage("注册成功");
+    }
+
+    @Override
+    public ServerResponse<String> updateUserInfo(User user) {
+
+        if (user == null) {
+            return ServerResponse.createByErrorMessage("参数为空");
+        }
+
+        int resultCount = userMapper.checkIdCard(user.getIdCard());
+        if (resultCount == 0) {
+            return ServerResponse.createByErrorMessage("用户不存在");
+        }
+
+        resultCount = userMapper.updateByPrimaryKeySelective(user);
+        if (resultCount == 0) {
+            return ServerResponse.createByErrorMessage("修改信息失败");
+        }
+        return ServerResponse.createBySuccessMessage("修改信息成功");
+    }
+
+    @Override
     public ServerResponse<String> rePassword(String idCard, String oldPassword, String newPassword) {
 
         User user = userMapper.selectByPrimaryKey(idCard);

@@ -59,7 +59,12 @@ public class UserController {
         }
 
         newUserInfo.setIdCard(user.getIdCard());
-        return userService.updateUserInfo(newUserInfo);
+        ServerResponse<String> response =  userService.updateUserInfo(newUserInfo);
+        if (response.isSuccess()) {
+            session.setAttribute(Const.CURRENT_USER, newUserInfo);
+            return response;
+        }
+        return  response;
 
     }
 

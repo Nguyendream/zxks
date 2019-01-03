@@ -15,10 +15,10 @@ public class ViewController {
     public String index(HttpSession session) {
 
         User user = (User)session.getAttribute(Const.CURRENT_USER);
-        if (user != null) {
-            return "exam_paper";
+        if (user == null) {
+            return "redirect:/login";
         }
-        return "redirect:/login";
+        return "exam_paper";
     }
 
     @GetMapping("/login")
@@ -29,6 +29,16 @@ public class ViewController {
     @GetMapping("/register")
     public String register() {
         return "register";
+    }
+
+    @GetMapping("/user_info")
+    public String user_info(HttpSession session) {
+
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return "redirect:/login";
+        }
+        return "user_info";
     }
 
     @GetMapping("/admin")

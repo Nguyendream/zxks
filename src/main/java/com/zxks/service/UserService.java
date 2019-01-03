@@ -16,7 +16,5 @@ public interface UserService {
 
     ServerResponse<String> rePassword(String idCard, String oldPassword, String newPassword);
 
-    ServerResponse<Admin> adminLogin(String username, String password);
-
     ServerResponse<List<User>> userList();
 }

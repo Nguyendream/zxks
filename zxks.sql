@@ -89,7 +89,7 @@ CREATE TABLE `exam_paper` (
   KEY `code_subject` (`code_subject`),
   CONSTRAINT `exam_paper_ibfk_1` FOREIGN KEY (`id_card`) REFERENCES `user_s` (`id_card`),
   CONSTRAINT `exam_paper_ibfk_2` FOREIGN KEY (`code_subject`) REFERENCES `exam_parameter` (`code_subject`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,7 +152,7 @@ CREATE TABLE `user_s` (
 
 LOCK TABLES `user_s` WRITE;
 /*!40000 ALTER TABLE `user_s` DISABLE KEYS */;
-INSERT INTO `user_s` VALUES ('201605021819','ruan','123456',NULL,NULL);
+INSERT INTO `user_s` VALUES ('201605021802','test1','E10ADC3949BA59ABBE56E057F20F883E','男',12),('201605021819','ruan','E10ADC3949BA59ABBE56E057F20F883E',NULL,NULL);
 /*!40000 ALTER TABLE `user_s` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -165,4 +165,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-03 18:59:24
+-- Dump completed on 2019-01-04  0:05:18

@@ -6,6 +6,7 @@ import com.zxks.dao.UserMapper;
 import com.zxks.pojo.Admin;
 import com.zxks.pojo.User;
 import com.zxks.service.UserService;
+import com.zxks.util.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +19,6 @@ public class UserServiceImp implements UserService {
     @Resource
     private UserMapper userMapper;
 
-    @Resource
-    private AdminMapper adminMapper;
-
     @Override
     public ServerResponse<User> userLogin(String idCard, String password) {
 
@@ -29,8 +27,10 @@ public class UserServiceImp implements UserService {
             return ServerResponse.createByErrorMessage("用户不存在");
         }
 
+        String md5Password = MD5Util.MD5EncodeUtf8(password);
+
         User user = userMapper.selectByPrimaryKey(idCard);
-        if (user.getPassword().equals(password)) {
+        if (user.getPassword().equals(md5Password)) {
             user.setPassword(StringUtils.EMPTY);
             return ServerResponse.createBySuccess("登陆成功", user);
         } else {
@@ -49,6 +49,9 @@ public class UserServiceImp implements UserService {
         if (resultCount != 0) {
             return ServerResponse.createByErrorMessage("已注册的准考证号");
         }
+
+        String md5Password = MD5Util.MD5EncodeUtf8(user.getPassword());
+        user.setPassword(md5Password);
 
         resultCount = userMapper.insert(user);
         if (resultCount == 0) {
@@ -83,19 +86,17 @@ public class UserServiceImp implements UserService {
         if (user == null) {
             return ServerResponse.createByErrorMessage("参数错误");
         }
-        if (oldPassword.equals(user.getPassword())) {
-            user.setPassword(newPassword);
+
+        String md5OldPassword = MD5Util.MD5EncodeUtf8(oldPassword);
+        String md5NewPassword = MD5Util.MD5EncodeUtf8(newPassword);
+
+        if (md5OldPassword.equals(user.getPassword())) {
+            user.setPassword(md5NewPassword);
             userMapper.updateByPrimaryKeySelective(user);
             return ServerResponse.createBySuccessMessage("修改密码成功");
         } else {
             return ServerResponse.createByErrorMessage("密码错误,修改密码失败");
         }
-    }
-
-    @Override
-    public ServerResponse<Admin> adminLogin(String username, String password) {
-
-        return null;
     }
 
     @Override

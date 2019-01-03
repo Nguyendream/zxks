@@ -12,22 +12,9 @@ import javax.annotation.Resource;
 @SpringBootTest
 public class ZxksApplicationTests {
 
-    @Resource
-    private ExamService examService;
-
     @Test
     public void contextLoads() {
 
-        System.out.println(examService.createPaper("201605021804", "101").getMsg());
-        System.out.println(examService.getPaper("201605021804").getData().toString());
-
-
-    }
-
-    @Test
-    public void revisePaperTest() {
-
-        examService.revisePaper("201605021805");
     }
 
 }

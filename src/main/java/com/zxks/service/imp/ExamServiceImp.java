@@ -215,4 +215,14 @@ public class ExamServiceImp implements ExamService {
         paperResultVo.setScoreExam(examPaper.getScoreExam());
         return ServerResponse.createBySuccess("获取结果成功", paperResultVo);
     }
+
+    @Override
+    public ServerResponse<String> deletePaper(String idCard) {
+
+        int resultCount = examPaperMapper.deleteByIdCard(idCard);
+        if (resultCount == 0) {
+            return ServerResponse.createByErrorMessage("没有试卷");
+        }
+        return ServerResponse.createBySuccessMessage("删除试卷成功，可重新考试了~");
+    }
 }

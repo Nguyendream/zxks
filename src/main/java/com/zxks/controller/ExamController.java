@@ -98,4 +98,15 @@ public class ExamController {
         return examService.getPaperResult(examPaper);
     }
 
+    @RequestMapping(value = "delete_paper.do", method = RequestMethod.POST)
+    public ServerResponse<String> deletePaper(HttpSession session) {
+
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorMessage("用户未登陆");
+        }
+
+        return examService.deletePaper(user.getIdCard());
+    }
+
 }

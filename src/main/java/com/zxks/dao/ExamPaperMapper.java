@@ -22,4 +22,6 @@ public interface ExamPaperMapper {
     ExamPaper selectByIdCard(String idCard);
 
     int updateByIdCardSelective(ExamPaper examPaper);
+
+    int deleteByIdCard(String idCard);
 }

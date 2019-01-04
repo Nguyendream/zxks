@@ -143,4 +143,9 @@
     </set>
     where id_card = #{idCard,jdbcType=VARCHAR}
   </update>
+
+  <delete id="deleteByIdCard" parameterType="string">
+    delete from exam_paper
+    where id_card = #{idCard,jdbcType=VARCHAR}
+  </delete>
 </mapper>

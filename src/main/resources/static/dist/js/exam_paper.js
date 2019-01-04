@@ -153,7 +153,7 @@ $.func = {
                 if (data.status==0) {
                     var result = $.func.getPaper();
                     if (result == 0) {
-                        alert(data.msg);
+                        //alert(data.msg);
                         timerRt = window.setInterval("GetRTime()", 1000);
                     }
                     return 0;
@@ -261,5 +261,20 @@ $(document).ready(function() {
     //注销
     $("#logoutId").click(function () {
         $.func.logout();
+    })
+
+    $("#deleteId").click(function () {
+        $.ajax({
+            type: "post",
+            url: "exam/delete_paper.do",
+            success: function (data) {
+                if (data.status == 0) {
+                    alert(data.msg);
+                    location.reload();
+                } else {
+                    alert(data.msg);
+                }
+            }
+        });
     })
 });

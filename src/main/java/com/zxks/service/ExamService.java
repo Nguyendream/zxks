@@ -25,4 +25,6 @@ public interface ExamService {
     public ServerResponse<ExamPaper> revisePaper(String idCard);
 
     public ServerResponse<PaperResultVo> getPaperResult(ExamPaper examPaper);
+
+    public ServerResponse<String> deletePaper(String idCard);
 }

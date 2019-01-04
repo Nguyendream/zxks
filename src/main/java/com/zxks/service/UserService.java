@@ -1,7 +1,6 @@
 package com.zxks.service;
 
 import com.zxks.common.ServerResponse;
-import com.zxks.pojo.Admin;
 import com.zxks.pojo.User;
 
 import java.util.List;

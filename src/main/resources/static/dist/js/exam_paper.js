@@ -45,7 +45,7 @@ $.func = {
                     $("#username").html(data.data.username);
                 } else {
                     alert("请登陆");
-                    location.href = "/login";
+                    location.href = "./login";
                 }
             }
         });
@@ -69,7 +69,7 @@ $.func = {
             type: "post",
             url: "user/logout.do",
             success: function () {
-                location.href="/";
+                location.href="./login";
             }
         });
     },

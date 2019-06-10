@@ -16,42 +16,42 @@ public class ViewController {
 
         User user = (User)session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
-            return "redirect:/login";
+            return "forward:login";
         }
         return "exam_paper";
     }
 
-    @GetMapping("/login")
+    @GetMapping("login")
     public String login() {
         return "login";
     }
 
-    @GetMapping("/register")
+    @GetMapping("register")
     public String register() {
         return "register";
     }
 
-    @GetMapping("/user_info")
+    @GetMapping("user_info")
     public String user_info(HttpSession session) {
 
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
-            return "redirect:/login";
+            return "forward:login";
         }
         return "user_info";
     }
 
-    @GetMapping("/re_password")
+    @GetMapping("re_password")
     public String re_password(HttpSession session) {
 
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
-            return "redirect:/login";
+            return "forward:login";
         }
         return "re_password";
     }
 
-    @GetMapping("/admin")
+    @GetMapping("admin")
     public String admin() {
         return "admin";
     }

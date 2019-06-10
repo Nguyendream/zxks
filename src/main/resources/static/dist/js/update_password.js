@@ -78,7 +78,7 @@ $(document).ready(function(){
                 success: function (data) {
                     if (data.status == 0) {
                         alert(data.msg);
-                        location.href = "/";
+                        location.href = ".";
                     } else {
                         alert(data.msg);
                         $("input").val("");
@@ -89,6 +89,6 @@ $(document).ready(function(){
 	});
 
     $("#cancelId").click(function () {
-        location.href = "/";
+        location.href = ".";
     })
 });

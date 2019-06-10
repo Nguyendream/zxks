@@ -83,7 +83,7 @@ $(document).ready(function(){
                 success: function (data) {
                     if (data.status == 0) {
                         alert(data.msg);
-                        location.href = "/";
+                        location.href = ".";
                     } else {
                         alert(data.msg);
                     }
@@ -93,6 +93,6 @@ $(document).ready(function(){
 	});
 
 	$("#cancelId").click(function () {
-        location.href = "/";
+        location.href = ".";
     });
 });
